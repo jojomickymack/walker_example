@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="2018.07.13" orientation="orthogonal" renderorder="right-down" width="200" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="5">
+ <imagelayer id="1" name="img01">
+  <image source="picture01.png" width="2887" height="480"/>
+ </imagelayer>
+ <objectgroup id="2" name="fields01">
+  <object id="1" name="text" x="770" y="227" width="189" height="215">
+   <properties>
+    <property name="val" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="2" name="text" x="1626" y="205" width="190" height="212">
+   <properties>
+    <property name="val" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="3" name="text" x="2684" y="193" width="199" height="236">
+   <properties>
+    <property name="val" type="int" value="2"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

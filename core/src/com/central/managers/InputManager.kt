@@ -39,18 +39,20 @@ class InputManager {
     }
 
     fun handleInput() {
-        if (lPressed) {
-            GameObj.gm.player.goLeft = true
-            GameObj.gm.player.goRight = false
-        } else if (rPressed) {
-            GameObj.gm.player.goLeft = false
-            GameObj.gm.player.goRight = true
-        } else if (!lPressed && !rPressed) {
-            GameObj.gm.player.goLeft = false
-            GameObj.gm.player.goRight = false
-        }
-        if (GameObj.textbox && aPressed) {
-            GameObj.gm.tw.remove()
+        with(GameObj.gm) {
+            if (lPressed) {
+                player.goLeft = true
+                player.goRight = false
+            } else if (rPressed) {
+                player.goLeft = false
+                player.goRight = true
+            } else if (!lPressed && !rPressed) {
+                player.goLeft = false
+                player.goRight = false
+            }
+            if (GameObj.textbox && aPressed) {
+                tw.remove()
+            }
         }
     }
 }

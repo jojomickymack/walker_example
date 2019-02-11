@@ -19,9 +19,7 @@ class Background(private val layers: Array<Texture>) : Actor() {
     var speed = 0f
 
     init {
-        for (i in 0 until layers.size) {
-            layers.get(i).setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge)
-        }
+        for (i in 0 until layers.size) layers.get(i).setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge)
 
         width = GameObj.stg.width
         height = GameObj.stg.height

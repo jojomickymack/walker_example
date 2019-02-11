@@ -3,11 +3,11 @@ package com.central.hudactors
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.InputListener
 import com.badlogic.gdx.scenes.scene2d.actions.Actions
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.central.screens.GameObj
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.run
+import ktx.actors.plusAssign
 
 
 fun TextWindow.trigger() {
@@ -23,12 +23,12 @@ class TextWindow(text: String) {
     }
 
     fun remove() {
-        dialog.addAction(sequence(Actions.fadeOut(this.fadeDuration), run(Runnable {
+        dialog += sequence(fadeOut(this.fadeDuration), run(Runnable {
             GameObj.paused = false
             GameObj.textbox = false
             GameObj.gm.incrementText()
             this.dialog.remove()
-        })))
+        }))
     }
 
     private val fadeDuration = 0.5f

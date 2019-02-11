@@ -19,7 +19,7 @@ class GameManager {
 
     private var textures = Array<Texture>()
 
-    private val sb = ScreenBorder()
+    private val border = ScreenBorder()
     var tw = TextWindow(GameObj.textArray[GameObj.textNum])
     val background = Background(textures)
 
@@ -36,35 +36,34 @@ class GameManager {
 
     init {
 
-        for (i in 1..6) {
-            textures.add(Texture(Gdx.files.internal("parallax/img$i.png")))
-        }
+        for (i in 1..6) textures.add(Texture(Gdx.files.internal("parallax/img$i.png")))
 
         val background = Background(textures)
-        GameObj.backgroundStg.addActor(background)
-        GameObj.stg.addActor(player)
 
-        GameObj.hudStg.addActor(sb)
-        GameObj.hudStg.addActor(GameObj.osgp)
-        GameObj.sr.projectionMatrix = GameObj.cam.combined.scl(GameObj.unitScale)
+        with(GameObj) {
+            backgroundStg.addActor(background)
+            stg.addActor(player)
 
-        mr.setView(GameObj.cam)
+            hudStg.addActor(border)
+            hudStg.addActor(osgp)
+            sr.projectionMatrix = cam.combined.scl(unitScale)
+            mr.setView(cam)
+        }
 
         music.isLooping = true
         music.play()
     }
 
     fun incrementText() {
-        GameObj.textNum++
-        if (GameObj.textNum >= GameObj.textArray.size) GameObj.textNum = 0
-        tw = TextWindow(GameObj.textArray[GameObj.textNum])
+        with(GameObj) {
+            textNum++
+            if (textNum >= textArray.size) textNum = 0
+            tw = TextWindow(textArray[textNum])
+        }
     }
 
     fun handleInput() {
         GameObj.im.handleInput()
-//        if (!tw.triggered && GameObj.im.aPressed) {
-//            tw.trigger()
-//        }
     }
 
     fun checkObjects() {
@@ -76,12 +75,10 @@ class GameManager {
     }
 
     fun render() {
-//        GameObj.stg.batch.begin()
-//        GameObj.stg.batch.draw(imgLayer.textureRegion, imgLayer.x, imgLayer.y)
-//        GameObj.stg.batch.end()
-
-        mr.batch.begin()
-        mr.batch.draw(imgLayer.textureRegion, imgLayer.x - player.mapPos.x + GameObj.stg.width / 2 - player.w / 2, imgLayer.y)
-        mr.batch.end()
+        with(mr) {
+            batch.begin()
+            batch.draw(imgLayer.textureRegion, imgLayer.x - player.mapPos.x + GameObj.stg.width / 2 - player.w / 2, imgLayer.y)
+            batch.end()
+        }
     }
 }

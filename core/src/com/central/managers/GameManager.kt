@@ -13,11 +13,13 @@ import com.central.hudactors.ScreenBorder
 import com.central.hudactors.TextWindow
 import com.central.screens.GameObj
 import com.central.hudactors.trigger
+import ktx.actors.plusAssign
+import ktx.graphics.use
 
 
 class GameManager {
 
-    private var textures = Array<Texture>()
+    private var textures = mutableListOf<Texture>()
 
     private val border = ScreenBorder()
     var tw = TextWindow(GameObj.textArray[GameObj.textNum])
@@ -36,16 +38,16 @@ class GameManager {
 
     init {
 
-        for (i in 1..6) textures.add(Texture(Gdx.files.internal("parallax/img$i.png")))
+        for (i in 1..6) textures = (textures + Texture(Gdx.files.internal("parallax/img$i.png"))).toMutableList()
 
         val background = Background(textures)
 
         with(GameObj) {
-            backgroundStg.addActor(background)
-            stg.addActor(player)
+            backgroundStg += background
+            stg += player
 
-            hudStg.addActor(border)
-            hudStg.addActor(osgp)
+            hudStg += border
+            hudStg += osgp
             sr.projectionMatrix = cam.combined.scl(unitScale)
             mr.setView(cam)
         }
@@ -76,9 +78,7 @@ class GameManager {
 
     fun render() {
         with(mr) {
-            batch.begin()
-            batch.draw(imgLayer.textureRegion, imgLayer.x - player.mapPos.x + GameObj.stg.width / 2 - player.w / 2, imgLayer.y)
-            batch.end()
+            batch.use { batch.draw(imgLayer.textureRegion, imgLayer.x - player.mapPos.x + GameObj.stg.width / 2 - player.w / 2, imgLayer.y) }
         }
     }
 }

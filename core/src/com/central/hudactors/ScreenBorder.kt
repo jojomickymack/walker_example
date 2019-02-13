@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color.*
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.central.screens.GameObj
+import ktx.graphics.use
 
 
 class ScreenBorder : Actor() {
@@ -21,22 +22,21 @@ class ScreenBorder : Actor() {
         batch.end()
 
         with(GameObj.sr) {
-            begin(Filled)
+            use(Filled) {
+                color = Color.valueOf("abefcc")
+                rectLine(0f, 0f, 0f, GameObj.hudStg.height, borderWidth)
+                rectLine(0f, GameObj.hudStg.height, GameObj.hudStg.width, GameObj.hudStg.height, borderWidth)
+                rectLine(GameObj.hudStg.width, 0f, GameObj.hudStg.width, GameObj.hudStg.height, borderWidth)
+                rectLine(0f, 0f, GameObj.hudStg.width, 0f, borderWidth)
+            }
 
-            color = Color.valueOf("abefcc")
-            rectLine(0f, 0f, 0f, GameObj.hudStg.height, borderWidth)
-            rectLine(0f, GameObj.hudStg.height, GameObj.hudStg.width, GameObj.hudStg.height, borderWidth)
-            rectLine(GameObj.hudStg.width, 0f, GameObj.hudStg.width, GameObj.hudStg.height, borderWidth)
-            rectLine(0f, 0f, GameObj.hudStg.width, 0f, borderWidth)
-            end()
-
-            begin(Line)
-            translate(GameObj.hudStg.width, GameObj.hudStg.height, 0f)
-            rotate(0f, 0f, 1f, myRotation)
-            color = WHITE
-            rect(0f - squareWidth / 2, 0f - squareWidth / 2, squareWidth, squareWidth)
-            identity()
-            end()
+            use(Line) {
+                translate(GameObj.hudStg.width, GameObj.hudStg.height, 0f)
+                rotate(0f, 0f, 1f, myRotation)
+                color = WHITE
+                rect(0f - squareWidth / 2, 0f - squareWidth / 2, squareWidth, squareWidth)
+                identity()
+            }
         }
 
         batch.begin()

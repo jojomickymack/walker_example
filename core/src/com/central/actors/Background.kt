@@ -3,10 +3,12 @@ package com.central.actors
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.scenes.scene2d.Actor
-import com.badlogic.gdx.utils.Array
 import com.central.screens.GameObj
 
-class Background(private val layers: Array<Texture>) : Actor() {
+// this technique of loading an array of textures and off setting their
+// scrolling was based on an example from https://libgdx.info/parallax
+
+class Background(private val layers: MutableList<Texture>) : Actor() {
 
     private var scroll = 0f
     private val speedDifference = 200
@@ -19,7 +21,7 @@ class Background(private val layers: Array<Texture>) : Actor() {
     var speed = 0f
 
     init {
-        for (i in 0 until layers.size) layers.get(i).setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge)
+        for (i in 0 until layers.size) layers[i].setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.ClampToEdge)
 
         width = GameObj.stg.width
         height = GameObj.stg.height

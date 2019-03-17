@@ -2,8 +2,11 @@ package com.central.screens
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.viewport.FitViewport
@@ -38,8 +41,34 @@ object GameObj {
             "Burp... I'm willie the frogman, you are now entering the frogzone. There are carnivorous frogs in the ice worlds that prey on humans, hopefully you know how to protect yourself from these murderous amphibians"
     )
 
+    val map = TmxMapLoader().load("maps/map01.tmx")
+    val mr = OrthogonalTiledMapRenderer(map)
+
+    var textures = mutableListOf<Texture>()
+    val capGuyTex = Texture("capguy_walk.png")
+    val music = Gdx.audio.newMusic(Gdx.files.internal("theme.ogg"))
+
     val osgp = OnScreenGamepad()
     val im = InputManager()
     var gpm = GamepadManager()
     val gm = GameManager()
+
+    fun dispose() {
+        skin.dispose()
+        sb.dispose()
+        sr.dispose()
+
+        map.dispose()
+        mr.dispose()
+
+        textures.forEach { it.dispose() }
+        capGuyTex.dispose()
+        music.dispose()
+
+        osgp.dispose()
+
+        stg.dispose()
+        hudStg.dispose()
+        backgroundStg.dispose()
+    }
 }

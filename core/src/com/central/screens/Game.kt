@@ -30,4 +30,10 @@ class Game(val application: App) : KtxScreen {
             gm.checkObjects()
         }
     }
+
+    override fun dispose() {
+        GameObj.dispose()
+        println("all disposable memory freed")
+        super.dispose()
+    }
 }

@@ -22,7 +22,7 @@ class PlayerStates {
 
 class Player : Actor() {
     val sprite = Sprite()
-    private val tex = Texture("capguy_walk.png")
+    private val tex = GameObj.capGuyTex
     internal var walkSheet = TextureRegion(tex, 0, 0, tex.width, tex.height)
     internal var currentFrame: TextureRegion
 

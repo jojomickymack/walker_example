@@ -1,12 +1,9 @@
 package com.central.managers
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.maps.MapLayer
 import com.badlogic.gdx.maps.tiled.TiledMapImageLayer
-import com.badlogic.gdx.maps.tiled.TmxMapLoader
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.central.actors.Background
 import com.central.actors.Player
 import com.central.hudactors.ScreenBorder
@@ -19,28 +16,21 @@ import ktx.graphics.use
 
 class GameManager {
 
-    private var textures = mutableListOf<Texture>()
-
     private val border = ScreenBorder()
     var tw = TextWindow(GameObj.textArray[GameObj.textNum])
-    val background = Background(textures)
+    val background = Background(GameObj.textures)
 
     val player = Player()
 
-    val map = TmxMapLoader().load("maps/map01.tmx")
-    val mr = OrthogonalTiledMapRenderer(map)
-
-    val imgLayer = map.layers.get("img01") as TiledMapImageLayer
-    val fieldLayer = map.layers.get("fields01") as MapLayer
+    val imgLayer = GameObj.map.layers.get("img01") as TiledMapImageLayer
+    val fieldLayer = GameObj.map.layers.get("fields01") as MapLayer
     val myTexts = fieldLayer.objects
-
-    val music = Gdx.audio.newMusic(Gdx.files.internal("theme.ogg"))
 
     init {
 
-        for (i in 1..6) textures = (textures + Texture(Gdx.files.internal("parallax/img$i.png"))).toMutableList()
+        for (i in 1..6) GameObj.textures = (GameObj.textures + Texture(Gdx.files.internal("parallax/img$i.png"))).toMutableList()
 
-        val background = Background(textures)
+        val background = Background(GameObj.textures)
 
         with(GameObj) {
             backgroundStg += background
@@ -52,8 +42,8 @@ class GameManager {
             mr.setView(cam)
         }
 
-        music.isLooping = true
-        music.play()
+        GameObj.music.isLooping = true
+        GameObj.music.play()
     }
 
     fun incrementText() {
@@ -77,7 +67,7 @@ class GameManager {
     }
 
     fun render() {
-        with(mr) {
+        with(GameObj.mr) {
             batch.use { batch.draw(imgLayer.textureRegion, imgLayer.x - player.mapPos.x + GameObj.stg.width / 2 - player.w / 2, imgLayer.y) }
         }
     }
